@@ -517,12 +517,6 @@ def load_df():
     vl_annuel = vl.resample('Y').last()
     aum_annuel = aum.resample('Y').last()
     collecte_annuel = aum_annuel - aum_annuel.shift()*(1+vl_annuel.pct_change())
-
-    # Gestion d'une donnée aberrantes ie AuM multiplié par 1_000_000 et VL mulitipliée par 1_000
-    aum_annuel.loc['2002', 'Federal Support Monetaire ESG'] = aum_annuel.loc['2002',
-                                                                             'Federal Support Monetaire ESG']/1_000_000
-    vl.loc[['2022-02-24', '2022-02-28', '2022-03-07', '2022-03-15'], 'Ecofi Investissements - Epargne Ethique Monetaire'] = vl.loc[['2022-02-24', '2022-02-28', '2022-03-07', '2022-03-15'], 'Ecofi Investissements - Epargne Ethique Monetaire']/1_000
-    aum.loc['2012-12-31', 'Ecofi Optim Variance'] = 9_630_000.0    
     
     vl_annuel.columns = pd.MultiIndex.from_tuples(zip(vl_annuel.columns,
                                                       vl_annuel.columns.map(desc.set_index('LONG_COMP_NAME')[
